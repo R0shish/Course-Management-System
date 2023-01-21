@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import javax.swing.JLabel;
 
 public class Validator {
-	
+
 	public static boolean validate(String text, JLabel label, String field) {
 		switch (field) {
 			case "Email":
@@ -14,7 +14,7 @@ public class Validator {
 				Pattern pattern = Pattern.compile(regex);
 				Matcher matcher = pattern.matcher(text);
 				if (!matcher.matches()) {
-					label.setText("Invalid " + field+ "!");
+					label.setText("Invalid " + field.toLowerCase() + "!");
 					return false;
 				}
 				label.setText("");
@@ -33,7 +33,7 @@ public class Validator {
 
 			default:
 				if (text.length() < 3) {
-					label.setText("Invalid " + field+ "!");
+					label.setText("Invalid " + field.toLowerCase() + "!");
 					return false;
 				}
 				label.setText("");

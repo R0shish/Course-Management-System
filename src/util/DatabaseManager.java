@@ -30,24 +30,24 @@ public class DatabaseManager {
 				throw e;
 		}
 	}
-	
+
 	private void createAuthTable() throws SQLException {
 		try {
-		String createTableSQL = "CREATE TABLE auth (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), password VARCHAR(100), role VARCHAR(20))";
-		stmt.executeUpdate(createTableSQL);
-		System.out.println("Table Created!");
+			String createTableSQL = "CREATE TABLE auth (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), password VARCHAR(100), role VARCHAR(20))";
+			stmt.executeUpdate(createTableSQL);
+			System.out.println("Table Created!");
 		} catch (SQLException e) {
-			if (e.getErrorCode() == 1050) 
+			if (e.getErrorCode() == 1050)
 				System.out.println("Table exists!");
 			else
 				throw e;
 		}
 	}
-	
+
 	public Connection getConnection() {
 		return conn;
 	}
-	
+
 	public Statement getStatement() {
 		return stmt;
 	}
