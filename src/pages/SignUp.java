@@ -62,12 +62,24 @@ public class SignUp extends JPanel {
 		signup.add(subtitle);
 
 		nameTxt = new JTextField();
+		nameTxt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				emailTxt.requestFocusInWindow();
+			}
+		});
 		nameTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		nameTxt.setBounds(52, 306, 332, 43);
 		signup.add(nameTxt);
 		nameTxt.setColumns(10);
 
 		emailTxt = new JTextField();
+		emailTxt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				passwordTxt.requestFocusInWindow();
+			}
+		});
 		emailTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		emailTxt.setColumns(10);
 		emailTxt.setBounds(52, 393, 332, 43);
@@ -87,12 +99,6 @@ public class SignUp extends JPanel {
 		passwordLbl.setFont(new Font("Futura", Font.PLAIN, 15));
 		passwordLbl.setBounds(55, 462, 80, 16);
 		signup.add(passwordLbl);
-
-		passwordTxt = new JPasswordField();
-		passwordTxt.setColumns(10);
-		passwordTxt.setFont(new Font("Futura", Font.PLAIN, 15));
-		passwordTxt.setBounds(52, 479, 332, 43);
-		signup.add(passwordTxt);
 
 		JLabel bottomLbl = new JLabel("Already have an account ?");
 		bottomLbl.setEnabled(false);
@@ -130,8 +136,7 @@ public class SignUp extends JPanel {
 		errorPasswordLbl.setBounds(55, 515, 322, 27);
 		signup.add(errorPasswordLbl);
 
-		JButton createBtn = new JButton("Create Account");
-		createBtn.addActionListener(new ActionListener() {
+		ActionListener signupAction = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Boolean> isValidSubmission = new ArrayList<Boolean>();
 				String name = nameTxt.getText().strip();
@@ -181,7 +186,17 @@ public class SignUp extends JPanel {
 				}
 
 			}
-		});
+		};
+
+		passwordTxt = new JPasswordField();
+		passwordTxt.setColumns(10);
+		passwordTxt.setFont(new Font("Futura", Font.PLAIN, 15));
+		passwordTxt.setBounds(52, 479, 332, 43);
+		passwordTxt.addActionListener(signupAction);
+		signup.add(passwordTxt);
+
+		JButton createBtn = new JButton("Create Account");
+		createBtn.addActionListener(signupAction);
 		createBtn.setFont(new Font("Futura", Font.PLAIN, 15));
 		createBtn.setForeground(new Color(242, 252, 255));
 		createBtn.setOpaque(true);

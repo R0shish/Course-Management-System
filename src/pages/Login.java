@@ -24,6 +24,7 @@ import models.Student;
 import models.SystemUser;
 import models.Teacher;
 import util.CustomImage;
+import util.Validator;
 
 public class Login extends JPanel {
 
@@ -64,6 +65,12 @@ public class Login extends JPanel {
 		login.add(subtitle);
 
 		emailTxt = new JTextField();
+		emailTxt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				passwordTxt.requestFocusInWindow();
+			}
+		});
 		emailTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		emailTxt.setColumns(10);
 		emailTxt.setBounds(52, 315, 332, 43);
@@ -78,12 +85,6 @@ public class Login extends JPanel {
 		passwordLbl.setFont(new Font("Futura", Font.PLAIN, 15));
 		passwordLbl.setBounds(55, 384, 80, 16);
 		login.add(passwordLbl);
-
-		passwordTxt = new JPasswordField();
-		passwordTxt.setColumns(10);
-		passwordTxt.setFont(new Font("Futura", Font.PLAIN, 15));
-		passwordTxt.setBounds(52, 401, 332, 43);
-		login.add(passwordTxt);
 
 		JLabel bottomLbl = new JLabel("Don't have an account ?");
 		bottomLbl.setEnabled(false);
@@ -115,8 +116,7 @@ public class Login extends JPanel {
 		errorPasswordLbl.setBounds(54, 442, 322, 27);
 		login.add(errorPasswordLbl);
 
-		JButton btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
+		ActionListener loginAction = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorEmailLbl.setText("");
 				errorPasswordLbl.setText("");
@@ -124,12 +124,16 @@ public class Login extends JPanel {
 				String email = emailTxt.getText().strip().toLowerCase();
 				String password = new String(passwordTxt.getPassword()).strip();
 
+				if (!Validator.validate(email, errorEmailLbl, "Email")) {
+					return;
+				}
+
 				try {
 					SystemUser user = Auth.returnSystemUser(email, password);
-					
+
 					emailTxt.setText("");
 					passwordTxt.setText("");
-					
+
 					if (user instanceof Student) {
 						new Dashboard(frame, (Student) user, login);
 					} else if (user instanceof Teacher) {
@@ -138,7 +142,7 @@ public class Login extends JPanel {
 						new Dashboard(frame, (Admin) user, login);
 					}
 					login.setVisible(false);
-					
+
 				} catch (InvalidEmailException errEmail) {
 					errorEmailLbl.setText(errEmail.getMessage());
 				} catch (InvalidPasswordException errPassword) {
@@ -148,7 +152,17 @@ public class Login extends JPanel {
 				}
 
 			}
-		});
+		};
+
+		passwordTxt = new JPasswordField();
+		passwordTxt.setColumns(10);
+		passwordTxt.setFont(new Font("Futura", Font.PLAIN, 15));
+		passwordTxt.setBounds(52, 401, 332, 43);
+		passwordTxt.addActionListener(loginAction);
+		login.add(passwordTxt);
+
+		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(loginAction);
 		btnLogin.setFont(new Font("Futura", Font.PLAIN, 15));
 		btnLogin.setForeground(new Color(242, 252, 255));
 		btnLogin.setOpaque(true);
