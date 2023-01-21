@@ -3,3 +3,4 @@
 bin/
 gen/
 out/
+.DS_Store
