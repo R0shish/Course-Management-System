@@ -28,11 +28,11 @@ public class SplashScreen extends JPanel {
 		splashFrame.setLayout(null);
 
 		JLabel logoImg = new JLabel(logo.getImage(100, 100));
-		logoImg.setBounds(726, 259, 100, 100);
+		logoImg.setBounds(690, 259, 100, 100);
 		splashFrame.add(logoImg);
 
 		progressBar = new JProgressBar();
-		progressBar.setBounds(726, 400, 100, 100);
+		progressBar.setBounds(690, 400, 100, 100);
 		progressBar.setMaximum(100);
 		splashFrame.add(progressBar);
 
