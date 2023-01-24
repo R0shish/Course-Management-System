@@ -17,4 +17,8 @@ public class SystemUser {
 		return role;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

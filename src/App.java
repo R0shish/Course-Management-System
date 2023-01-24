@@ -36,6 +36,7 @@ public class App {
 		frmHeraldCourseManagement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmHeraldCourseManagement.getContentPane().setLayout(null);
 		frmHeraldCourseManagement.setSize(1480, 720);
+		frmHeraldCourseManagement.setResizable(false);
 
 		CustomImage logo = new CustomImage("../resources/logo.png");
 

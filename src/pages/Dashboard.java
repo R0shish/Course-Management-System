@@ -10,22 +10,29 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import models.Admin;
 import models.Student;
 import models.Teacher;
 import util.CustomImage;
+import util.CellRenderer;
 
 public class Dashboard extends JPanel {
 
 	private static final long serialVersionUID = -3421670490444154816L;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public Dashboard(JFrame frame, Student user, JPanel login) {
 		System.out.println("Student");
 		JPanel dashboardFrame = new JPanel();
@@ -74,8 +81,9 @@ public class Dashboard extends JPanel {
 
 		JPanel coursesPanel = new JPanel();
 		coursesPanel.setBackground(new Color(252, 255, 255));
-		coursesPanel.setBounds(188, 261, 676, 370);
+		coursesPanel.setBounds(188, 263, 676, 369);
 		dashboardFrame.add(coursesPanel);
+		coursesPanel.setLayout(null);
 
 		JLabel lblTeachers = new JLabel("Teachers");
 		lblTeachers.setFont(new Font("Futura", Font.PLAIN, 20));
@@ -86,6 +94,19 @@ public class Dashboard extends JPanel {
 		teachersPanel.setBackground(Color.WHITE);
 		teachersPanel.setBounds(936, 262, 418, 369);
 		dashboardFrame.add(teachersPanel);
+		teachersPanel.setLayout(null);
+
+		DefaultListModel<Teacher> model = new DefaultListModel<Teacher>();
+		for (int i = 1; i <= 5; i++) {
+			model.addElement(new Teacher("Teacher " + i));
+		}
+		JList<Teacher> teachers = new JList<Teacher>(model);
+		teachers.setCellRenderer(new CellRenderer());
+		teachers.setBorder(null);
+		teachers.setBounds(0, 0, 418, 365);
+		JScrollPane scrollPane = new JScrollPane(teachers);
+		scrollPane.setBounds(0, 0, 418, 369);
+		teachersPanel.add(scrollPane);
 
 		JPanel sidebar = new JPanel();
 		sidebar.setBackground(new Color(255, 255, 255));
@@ -204,9 +225,6 @@ public class Dashboard extends JPanel {
 
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public Dashboard(JFrame frame, Admin user, JPanel login) {
 		System.out.println("Admin");
 		JPanel dashboardFrame = new JPanel();
