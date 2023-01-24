@@ -1,4 +1,4 @@
-package pages;
+package pages.common;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -36,7 +36,7 @@ public class Login extends JPanel {
 
 	public Login(JFrame frame, CustomImage logo) {
 
-		ImageIcon loginImg = new ImageIcon(getClass().getResource("../resources/login_image.png"));
+		ImageIcon loginImg = new ImageIcon(getClass().getResource("../../resources/login_image.png"));
 		Image loginImage = loginImg.getImage().getScaledInstance(1100, 708, java.awt.Image.SCALE_SMOOTH);
 		loginImg = new ImageIcon(loginImage);
 
@@ -47,8 +47,9 @@ public class Login extends JPanel {
 		login.setVisible(true);
 		login.setLayout(null);
 
-		JLabel password_eye = new JLabel(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
-		password_eye.setBounds(339, 412, 30, 19);
+		JLabel password_eye = new JLabel(
+				new ImageIcon(Login.class.getResource("../../resources/password_eye_show.png")));
+		password_eye.setBounds(339, 414, 30, 19);
 		login.add(password_eye);
 
 		JLabel logoImg = new JLabel(logo.getImage(100, 100));
@@ -96,7 +97,7 @@ public class Login extends JPanel {
 		JLabel bottomLbl = new JLabel("Don't have an account ?");
 		bottomLbl.setEnabled(false);
 		bottomLbl.setFont(new Font("Kohinoor Bangla", Font.PLAIN, 12));
-		bottomLbl.setBounds(109, 544, 152, 27);
+		bottomLbl.setBounds(110, 544, 152, 27);
 		login.add(bottomLbl);
 
 		JLabel signUpBtn = new JLabel("Sign Up");
@@ -177,7 +178,7 @@ public class Login extends JPanel {
 		passwordTxt.setBounds(52, 401, 332, 43);
 		passwordTxt.addActionListener(loginAction);
 		passwordTxt.setBorder(BorderFactory.createCompoundBorder(passwordTxt.getBorder(),
-				BorderFactory.createEmptyBorder(0, 5, 0, 50)));
+				BorderFactory.createEmptyBorder(0, 5, 0, 38)));
 		login.add(passwordTxt);
 
 		password_eye.addMouseListener(new MouseAdapter() {
@@ -185,10 +186,12 @@ public class Login extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (passwordTxt.getEchoChar() == '●') {
 					passwordTxt.setEchoChar((char) 0);
-					password_eye.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_hide.png")));
+					password_eye
+							.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_hide.png")));
 				} else {
 					passwordTxt.setEchoChar('●');
-					password_eye.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
+					password_eye
+							.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_show.png")));
 				}
 			}
 		});
