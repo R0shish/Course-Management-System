@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -46,6 +47,10 @@ public class Login extends JPanel {
 		login.setVisible(true);
 		login.setLayout(null);
 
+		JLabel password_eye = new JLabel(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
+		password_eye.setBounds(339, 412, 30, 19);
+		login.add(password_eye);
+
 		JLabel logoImg = new JLabel(logo.getImage(100, 100));
 		logoImg.setBounds(52, 43, 100, 100);
 		login.add(logoImg);
@@ -74,6 +79,8 @@ public class Login extends JPanel {
 		emailTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		emailTxt.setColumns(10);
 		emailTxt.setBounds(52, 315, 332, 43);
+		emailTxt.setBorder(
+				BorderFactory.createCompoundBorder(emailTxt.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
 		login.add(emailTxt);
 
 		JLabel emailLbl = new JLabel("Email");
@@ -92,17 +99,27 @@ public class Login extends JPanel {
 		bottomLbl.setBounds(109, 544, 152, 27);
 		login.add(bottomLbl);
 
-		JLabel loginBtn = new JLabel("Sign Up");
-		loginBtn.addMouseListener(new MouseAdapter() {
+		JLabel signUpBtn = new JLabel("Sign Up");
+		signUpBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new SignUp(frame, logo);
 				login.setVisible(false);
 			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				signUpBtn.setForeground(new Color(242, 147, 179));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				signUpBtn.setForeground(Color.BLACK);
+			}
 		});
-		loginBtn.setFont(new Font("Kohinoor Bangla", Font.BOLD, 12));
-		loginBtn.setBounds(245, 544, 43, 27);
-		login.add(loginBtn);
+		signUpBtn.setFont(new Font("Kohinoor Bangla", Font.BOLD, 12));
+		signUpBtn.setBounds(245, 544, 43, 27);
+		login.add(signUpBtn);
 
 		JLabel errorEmailLbl = new JLabel("");
 		errorEmailLbl.setForeground(new Color(255, 0, 7));
@@ -159,7 +176,22 @@ public class Login extends JPanel {
 		passwordTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		passwordTxt.setBounds(52, 401, 332, 43);
 		passwordTxt.addActionListener(loginAction);
+		passwordTxt.setBorder(BorderFactory.createCompoundBorder(passwordTxt.getBorder(),
+				BorderFactory.createEmptyBorder(0, 5, 0, 50)));
 		login.add(passwordTxt);
+
+		password_eye.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (passwordTxt.getEchoChar() == '●') {
+					passwordTxt.setEchoChar((char) 0);
+					password_eye.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_hide.png")));
+				} else {
+					passwordTxt.setEchoChar('●');
+					password_eye.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
+				}
+			}
+		});
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(loginAction);
