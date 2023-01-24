@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -43,6 +44,10 @@ public class SignUp extends JPanel {
 		signup.setVisible(true);
 		signup.setLayout(null);
 
+		JLabel password_eye = new JLabel(new ImageIcon(getClass().getResource("../resources/password_eye_show.png")));
+		password_eye.setBounds(336, 489, 41, 22);
+		signup.add(password_eye);
+
 		JLabel logoImg = new JLabel(logo.getImage(100, 100));
 		logoImg.setBounds(52, 43, 100, 100);
 		signup.add(logoImg);
@@ -70,6 +75,8 @@ public class SignUp extends JPanel {
 		});
 		nameTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		nameTxt.setBounds(52, 306, 332, 43);
+		nameTxt.setBorder(
+				BorderFactory.createCompoundBorder(nameTxt.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
 		signup.add(nameTxt);
 		nameTxt.setColumns(10);
 
@@ -83,6 +90,8 @@ public class SignUp extends JPanel {
 		emailTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		emailTxt.setColumns(10);
 		emailTxt.setBounds(52, 393, 332, 43);
+		emailTxt.setBorder(
+				BorderFactory.createCompoundBorder(emailTxt.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
 		signup.add(emailTxt);
 
 		JLabel nameLbl = new JLabel("Name");
@@ -112,6 +121,16 @@ public class SignUp extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				new Login(frame, logo);
 				signup.setVisible(false);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				loginBtn.setForeground(new Color(242, 147, 179));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				loginBtn.setForeground(Color.BLACK);
 			}
 		});
 		loginBtn.setFont(new Font("Kohinoor Bangla", Font.BOLD, 12));
@@ -157,7 +176,7 @@ public class SignUp extends JPanel {
 						JDialog dialog = new JDialog();
 						dialog.setAlwaysOnTop(true);
 						dialog.setSize(300, 75);
-						dialog.add(label);
+						dialog.getContentPane().add(label);
 						dialog.setUndecorated(true);
 						dialog.setLocationRelativeTo(null);
 
@@ -192,8 +211,24 @@ public class SignUp extends JPanel {
 		passwordTxt.setColumns(10);
 		passwordTxt.setFont(new Font("Futura", Font.PLAIN, 15));
 		passwordTxt.setBounds(52, 479, 332, 43);
+		passwordTxt.setBorder(BorderFactory.createCompoundBorder(passwordTxt.getBorder(),
+				BorderFactory.createEmptyBorder(0, 5, 0, 50)));
+
 		passwordTxt.addActionListener(signupAction);
 		signup.add(passwordTxt);
+
+		password_eye.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (passwordTxt.getEchoChar() == '●') {
+					passwordTxt.setEchoChar((char) 0);
+					password_eye.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_hide.png")));
+				} else {
+					passwordTxt.setEchoChar('●');
+					password_eye.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
+				}
+			}
+		});
 
 		JButton createBtn = new JButton("Create Account");
 		createBtn.addActionListener(signupAction);
@@ -205,5 +240,4 @@ public class SignUp extends JPanel {
 		createBtn.setBounds(52, 556, 332, 43);
 		signup.add(createBtn);
 	}
-
 }
