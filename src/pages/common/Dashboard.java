@@ -35,6 +35,9 @@ class Dashboard extends JPanel {
 	private static final long serialVersionUID = -3421670490444154816L;
 	private JTextField textField;
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public Dashboard(JFrame frame, Admin user, JPanel login) {
 		System.out.println("Admin");
 		JPanel main = new JPanel();

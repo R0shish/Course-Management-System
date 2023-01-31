@@ -28,7 +28,7 @@ public class Auth {
 			if (count == 0)
 				throw new InvalidEmailException("No user with this email found!");
 			else {
-				sql = "SELECT name,role FROM auth WHERE email='" + email + "' AND password='" + password + "'";
+				sql = "SELECT name,role FROM auth WHERE email='" + email + "' AND BINARY password='" + password + "'";
 				rs = stmt.executeQuery(sql);
 				if (rs.next()) {
 					switch (rs.getString("role")) {

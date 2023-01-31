@@ -223,10 +223,10 @@ public class SignUp extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (passwordTxt.getEchoChar() == '●') {
 					passwordTxt.setEchoChar((char) 0);
-					password_eye.setIcon(new ImageIcon(Login.class.getResource("../resources/password_eye_hide.png")));
+					password_eye.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_hide.png")));
 				} else {
 					passwordTxt.setEchoChar('●');
-					password_eye.setIcon(new ImageIcon(Login.class.getResource("../resources/password_eye_show.png")));
+					password_eye.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_show.png")));
 				}
 			}
 		});
