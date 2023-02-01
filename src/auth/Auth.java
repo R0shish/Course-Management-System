@@ -1,8 +1,8 @@
 package auth;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import exceptions.InvalidEmailException;
 import exceptions.InvalidPasswordException;
@@ -12,24 +12,33 @@ import models.SystemUser;
 import models.Teacher;
 
 public class Auth {
-	private static Statement stmt;
+	private static PreparedStatement checkEmailStmt;
+	private static PreparedStatement retrieveRoleStmt;
+	private static PreparedStatement checkEmailExistenceStmt;
+	private static PreparedStatement addCredentialStmt;
 
-	public Auth(util.DatabaseManager db) {
-		Auth.stmt = db.getStatement();
+	public Auth(util.DatabaseManager db) throws SQLException {
+		checkEmailStmt = db.getConnection().prepareStatement("SELECT count(*) FROM auth WHERE email=?");
+		retrieveRoleStmt = db.getConnection()
+				.prepareStatement("SELECT name,role FROM auth WHERE email=? AND BINARY password=?");
+		checkEmailExistenceStmt = db.getConnection().prepareStatement("SELECT email FROM auth WHERE email=?");
+		addCredentialStmt = db.getConnection()
+				.prepareStatement("INSERT INTO auth (name, email, password, role) VALUES (?,?,?, 'Student')");
 	}
 
 	public static SystemUser returnSystemUser(String email, String password) throws Exception {
 		try {
-			String sql = "SELECT count(*) FROM auth WHERE email='" + email + "'";
-			ResultSet rs = stmt.executeQuery(sql);
+			checkEmailStmt.setString(1, email);
+			ResultSet rs = checkEmailStmt.executeQuery();
 			int count = 0;
 			if (rs.next())
 				count = rs.getInt(1);
 			if (count == 0)
 				throw new InvalidEmailException("No user with this email found!");
 			else {
-				sql = "SELECT name,role FROM auth WHERE email='" + email + "' AND BINARY password='" + password + "'";
-				rs = stmt.executeQuery(sql);
+				retrieveRoleStmt.setString(1, email);
+				retrieveRoleStmt.setString(2, password);
+				rs = retrieveRoleStmt.executeQuery();
 				if (rs.next()) {
 					switch (rs.getString("role")) {
 						case "Student":
@@ -51,14 +60,15 @@ public class Auth {
 
 	public static void addCredential(String name, String email, String password) throws Exception {
 		try {
-			String sql = "SELECT email FROM auth WHERE email='" + email + "'";
-			ResultSet rs = stmt.executeQuery(sql);
+			checkEmailExistenceStmt.setString(1, email);
+			ResultSet rs = checkEmailExistenceStmt.executeQuery();
 			if (rs.next()) {
 				throw new InvalidEmailException("Email already in use!");
 			} else {
-				sql = "INSERT INTO auth (name, email, password, role) VALUES ('" + name + "', '" + email + "', '"
-						+ password + "', 'Student')";
-				stmt.executeUpdate(sql);
+				addCredentialStmt.setString(1, name);
+				addCredentialStmt.setString(2, email);
+				addCredentialStmt.setString(3, password);
+				addCredentialStmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

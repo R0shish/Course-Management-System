@@ -2,6 +2,7 @@ package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -47,8 +48,8 @@ public class DatabaseManager {
 	public Connection getConnection() {
 		return conn;
 	}
-
-	public Statement getStatement() {
-		return stmt;
+	
+	public PreparedStatement getPreparedStatement(String sql) throws SQLException {
+	    return conn.prepareStatement(sql);
 	}
 }
