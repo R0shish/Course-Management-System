@@ -20,10 +20,10 @@ import javax.swing.JTextField;
 import auth.Auth;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidPasswordException;
-import models.Admin;
-import models.Student;
-import models.SystemUser;
-import models.Teacher;
+import models.user.Admin;
+import models.user.Student;
+import models.user.SystemUser;
+import models.user.Teacher;
 import util.CustomImage;
 import util.Validator;
 

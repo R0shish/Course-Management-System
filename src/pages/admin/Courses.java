@@ -1,5 +1,8 @@
 package pages.admin;
 
+import java.awt.Font;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Courses extends JPanel {
@@ -16,6 +19,11 @@ public class Courses extends JPanel {
 		courses.setLayout(null);
 		courses.setBounds(113, 0, 1161, 701);
 		add(courses);
+
+		JLabel title = new JLabel("Manage Courses");
+		title.setFont(new Font("Futura", Font.PLAIN, 20));
+		title.setBounds(105, 43, 159, 36);
+		courses.add(title);
 	}
 
 	// Singleton to ensure one and only instance

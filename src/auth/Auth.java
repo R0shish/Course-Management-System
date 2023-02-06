@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 import exceptions.InvalidEmailException;
 import exceptions.InvalidPasswordException;
-import models.Admin;
-import models.Student;
-import models.SystemUser;
-import models.Teacher;
+import models.user.Admin;
+import models.user.Student;
+import models.user.SystemUser;
+import models.user.Teacher;
 
 public class Auth {
 	private static PreparedStatement checkEmailStmt;

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import auth.Auth;
 import pages.common.SplashScreen;
 import util.CustomImage;
+import util.DataRetriever;
 import util.DatabaseManager;
 
 public class App {
@@ -43,9 +44,11 @@ public class App {
 		new SplashScreen(frmHeraldCourseManagement, logo);
 
 		try {
-			DatabaseManager db = new DatabaseManager("jdbc:mysql://localhost:3306", "root", "");
+			DatabaseManager db = DatabaseManager.getInstance();
 			new Auth(db);
+			new DataRetriever();
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			JOptionPane.showMessageDialog(null,
 					"Can not connect to database!\nPlease make sure mySQL is correctly setup and running!",
 					"Error 500: Server Communication Failed", JOptionPane.ERROR_MESSAGE);

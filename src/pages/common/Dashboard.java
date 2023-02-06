@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,12 +22,14 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import models.Admin;
-import models.Student;
-import models.Teacher;
+import models.course.Course;
+import models.user.Admin;
+import models.user.Student;
+import models.user.Teacher;
 import pages.admin.Courses;
 import util.CellRenderer;
 import util.CustomImage;
+import util.DataRetriever;
 
 class Dashboard extends JPanel {
 
@@ -162,7 +163,7 @@ class Dashboard extends JPanel {
 		searchBar.setBounds(806, 39, 418, 45);
 		dashboard.add(searchBar);
 
-		JLabel searchIcon = new JLabel((Icon) null);
+		JLabel searchIcon = new JLabel(new ImageIcon(getClass().getResource("../../resources/search_icon.png")));
 		searchIcon.setBounds(382, 0, 30, 45);
 		searchBar.add(searchIcon);
 
@@ -192,6 +193,27 @@ class Dashboard extends JPanel {
 		teachersPanel.setBackground(Color.WHITE);
 		teachersPanel.setBounds(806, 268, 418, 369);
 		dashboard.add(teachersPanel);
+
+		DefaultListModel<Course> model = new DefaultListModel<Course>();
+		model.addAll(DataRetriever.getCourses());
+		coursesPanel.setLayout(new BorderLayout(0, 0));
+		JList<Course> courses = new JList<Course>(model);
+		courses.setCellRenderer(new CellRenderer());
+		courses.setBorder(null);
+		courses.setBounds(0, 0, 418, 365);
+		JScrollPane scrollPane = new JScrollPane(courses);
+		coursesPanel.add(scrollPane);
+
+		DefaultListModel<Teacher> teacherModel = new DefaultListModel<Teacher>();
+		teacherModel.addAll(DataRetriever.getTeachers());
+		JList<Teacher> teachers = new JList<Teacher>(teacherModel);
+		teachers.setCellRenderer(new CellRenderer());
+		teachers.setBorder(null);
+		teachers.setBounds(0, 0, 418, 365);
+		JScrollPane teacherScrollPane = new JScrollPane(teachers);
+		scrollPane.setBounds(0, 0, 418, 369);
+		teachersPanel.setLayout(new BorderLayout(0, 0));
+		teachersPanel.add(teacherScrollPane);
 
 		logoImg.addMouseListener(new MouseAdapter() {
 			@Override
@@ -273,17 +295,14 @@ class Dashboard extends JPanel {
 		dashboardFrame.add(teachersPanel);
 		teachersPanel.setLayout(null);
 
-		DefaultListModel<Teacher> model = new DefaultListModel<Teacher>();
-		for (int i = 1; i <= 5; i++) {
-			model.addElement(new Teacher("Teacher " + i));
-		}
-		JList<Teacher> teachers = new JList<Teacher>(model);
-		teachers.setCellRenderer(new CellRenderer());
-		teachers.setBorder(null);
-		teachers.setBounds(0, 0, 418, 365);
-		JScrollPane scrollPane = new JScrollPane(teachers);
-		scrollPane.setBounds(0, 0, 418, 369);
-		teachersPanel.add(scrollPane);
+		// DefaultListModel<Teacher> model = new DefaultListModel<Teacher>();
+		// JList<Teacher> teachers = new JList<Teacher>(model);
+		// teachers.setCellRenderer(new CellRenderer());
+		// teachers.setBorder(null);
+		// teachers.setBounds(0, 0, 418, 365);
+		// JScrollPane scrollPane = new JScrollPane(teachers);
+		// scrollPane.setBounds(0, 0, 418, 369);
+		// teachersPanel.add(scrollPane);
 
 		JPanel sidebar = new JPanel();
 		sidebar.setBackground(new Color(255, 255, 255));
