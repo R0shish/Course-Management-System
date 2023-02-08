@@ -27,6 +27,8 @@ import models.user.Admin;
 import models.user.Student;
 import models.user.Teacher;
 import pages.admin.Courses;
+import pages.admin.Students;
+import pages.admin.Teachers;
 import util.CellRenderer;
 import util.CustomImage;
 import util.DataRetriever;
@@ -90,6 +92,7 @@ class Dashboard extends JPanel {
 		coursesLbl.setFont(new Font("Futura", Font.PLAIN, 15));
 
 		JPanel studentsSidebar = new JPanel();
+	
 		studentsSidebar.setBackground(new Color(255, 255, 255));
 		studentsSidebar.setBounds(15, 240, 109, 37);
 		sidebar.add(studentsSidebar);
@@ -225,7 +228,29 @@ class Dashboard extends JPanel {
 		coursesSidebar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Courses.getInstance(main);
+				Courses.getInstance(main).setVisible(true);;
+				Students.getInstance(main).setVisible(false);
+				Teachers.getInstance(main).setVisible(false);
+				dashboard.setVisible(false);
+			}
+		});
+		
+		studentsSidebar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Courses.getInstance(main).setVisible(false);
+				Teachers.getInstance(main).setVisible(false);
+				Students.getInstance(main).setVisible(true);
+				dashboard.setVisible(false);
+			}
+		});
+		
+		teachersSidebar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Courses.getInstance(main).setVisible(false);
+				Students.getInstance(main).setVisible(false);
+				Teachers.getInstance(main).setVisible(true);
 				dashboard.setVisible(false);
 			}
 		});
@@ -294,15 +319,6 @@ class Dashboard extends JPanel {
 		teachersPanel.setBounds(936, 262, 418, 369);
 		dashboardFrame.add(teachersPanel);
 		teachersPanel.setLayout(null);
-
-		// DefaultListModel<Teacher> model = new DefaultListModel<Teacher>();
-		// JList<Teacher> teachers = new JList<Teacher>(model);
-		// teachers.setCellRenderer(new CellRenderer());
-		// teachers.setBorder(null);
-		// teachers.setBounds(0, 0, 418, 365);
-		// JScrollPane scrollPane = new JScrollPane(teachers);
-		// scrollPane.setBounds(0, 0, 418, 369);
-		// teachersPanel.add(scrollPane);
 
 		JPanel sidebar = new JPanel();
 		sidebar.setBackground(new Color(255, 255, 255));

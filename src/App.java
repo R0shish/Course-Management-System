@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import auth.Auth;
 import pages.common.SplashScreen;
 import util.CustomImage;
+import util.DataManager;
 import util.DataRetriever;
 import util.DatabaseManager;
 
@@ -47,6 +48,8 @@ public class App {
 			DatabaseManager db = DatabaseManager.getInstance();
 			new Auth(db);
 			new DataRetriever();
+			new DataManager();
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			JOptionPane.showMessageDialog(null,

@@ -1,46 +1,50 @@
 package pages.admin;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
-import models.course.Course;
+import models.user.Teacher;
+
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import util.DataManager;
 import util.DataRetriever;
 
-public class Courses extends JPanel {
+public class Students extends JPanel {
 
-	private static final long serialVersionUID = -4551964813659714257L;
-	private static Courses instance;
-	JPanel coursesGrid;
+	private static final long serialVersionUID = 7035062181966295884L;
+	private static Students instance;
 
-	private Courses(JPanel main) {
+	/**
+	 * Create the panel.
+	 */
+	public Students(JPanel main) {
 		main.add(this);
 		this.setBounds(113, 0, 1341, 701);
 		setLayout(null);
 
-		JPanel courses = new JPanel();
-		courses.setLayout(null);
-		courses.setBounds(113, 0, 1222, 701);
-		add(courses);
+		JPanel students = new JPanel();
+		students.setLayout(null);
+		students.setBounds(113, 0, 1222, 701);
+		add(students);
 
-		JLabel title = new JLabel("Manage Courses");
+		JLabel title = new JLabel("Manage Students");
 		title.setFont(new Font("Futura", Font.PLAIN, 25));
 		title.setBounds(5, 75, 236, 36);
-		courses.add(title);
+		students.add(title);
 
 		JLabel addBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/add.png")));
 		addBtnLbl.addMouseListener(new MouseAdapter() {
@@ -65,11 +69,6 @@ public class Courses extends JPanel {
 					try {
 						DataManager.insert("courses", column, values);
 						JOptionPane.showMessageDialog(null, "Course added successfully");
-						courses.remove(coursesGrid);
-						createCoursesGrid(courses);
-						courses.revalidate();
-						courses.repaint();
-
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "Error adding course", e1.getMessage(),
 								JOptionPane.ERROR_MESSAGE);
@@ -79,7 +78,7 @@ public class Courses extends JPanel {
 			}
 		});
 		addBtnLbl.setBounds(854, 47, 45, 45);
-		courses.add(addBtnLbl);
+		students.add(addBtnLbl);
 
 		JLabel editBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/edit.png")));
 		editBtnLbl.addMouseListener(new MouseAdapter() {
@@ -102,11 +101,6 @@ public class Courses extends JPanel {
 					try {
 						DataManager.editCourse(courseId, courseName);
 						JOptionPane.showMessageDialog(null, "Course updated successfully");
-						courses.remove(coursesGrid);
-						createCoursesGrid(courses);
-						courses.revalidate();
-						courses.repaint();
-
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "Error updating course", e1.getMessage(),
 								JOptionPane.ERROR_MESSAGE);
@@ -116,7 +110,7 @@ public class Courses extends JPanel {
 			}
 		});
 		editBtnLbl.setBounds(946, 43, 45, 45);
-		courses.add(editBtnLbl);
+		students.add(editBtnLbl);
 
 		JLabel removeBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/remove.png")));
 		removeBtnLbl.addMouseListener(new MouseAdapter() {
@@ -136,11 +130,6 @@ public class Courses extends JPanel {
 					try {
 						DataManager.deleteCourse(courseId);
 						JOptionPane.showMessageDialog(null, "Course deleted successfully");
-						courses.remove(coursesGrid);
-						createCoursesGrid(courses);
-						courses.revalidate();
-						courses.repaint();
-
 					} catch (SQLException e1) {
 						System.out.println(e1.getMessage());
 						JOptionPane.showMessageDialog(null, "Error deleting course", e1.getMessage(),
@@ -151,57 +140,44 @@ public class Courses extends JPanel {
 			}
 		});
 		removeBtnLbl.setBounds(1036, 47, 45, 45);
-		courses.add(removeBtnLbl);
+		students.add(removeBtnLbl);
 
 		JLabel addLbl = new JLabel("Add");
 		addLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		addLbl.setBounds(846, 103, 61, 16);
-		courses.add(addLbl);
+		students.add(addLbl);
 
 		JLabel editLbl = new JLabel("Edit");
 		editLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		editLbl.setBounds(931, 104, 61, 16);
-		courses.add(editLbl);
+		students.add(editLbl);
 
 		JLabel removeLbl = new JLabel("Remove");
 		removeLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		removeLbl.setBounds(1029, 103, 61, 16);
-		courses.add(removeLbl);
+		students.add(removeLbl);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 185, 1138, 454);
+		students.add(scrollPane);
 
-		createCoursesGrid(courses);
+		ArrayList<Teacher> teachersData = DataRetriever.getTeachers();
 
-	}
-
-	private void createCoursesGrid(JPanel courses) {
-		ArrayList<Course> allCourses = DataRetriever.getCourses();
-
-		coursesGrid = new JPanel();
-		coursesGrid.setBounds(4, 207, 1046, 219);
-		courses.add(coursesGrid);
-
-		coursesGrid.setLayout(new GridLayout(0, 2, 0, 0));
-		for (int i = 0; i < allCourses.size(); i++) {
-			JPanel coursesGridBox = new JPanel();
-			coursesGridBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			coursesGrid.add(coursesGridBox);
-			coursesGridBox.setLayout(new BorderLayout(0, 0));
-
-			JLabel coursesIdLbl = new JLabel(
-					"<html><br><center><b>Course ID</b><br>" + allCourses.get(i).getId() + "</center></html>");
-			coursesIdLbl.setHorizontalAlignment(SwingConstants.CENTER);
-			coursesGridBox.add(coursesIdLbl, BorderLayout.NORTH);
-
-			JLabel coursesNameLbl = new JLabel(
-					"<html><center><b>Course Name</b><br>" + allCourses.get(i).getName() + "</center></html>");
-			coursesNameLbl.setHorizontalAlignment(SwingConstants.CENTER);
-			coursesGridBox.add(coursesNameLbl, BorderLayout.CENTER);
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(new String[] { "ID", "Name", "Phone Number", "Email Address", "Module" });
+		for (Teacher teacherData : teachersData) {
+			model.addRow(new Object[] { teacherData.getId(), teacherData.getName(), teacherData.getPhone(), "",
+					teacherData.getModules() });
 		}
+		JTable table_1 = new JTable(model);
+		scrollPane.setViewportView(table_1);
+
 	}
 
 	// Singleton to ensure one and only instance
-	public static Courses getInstance(JPanel main) {
+	public static Students getInstance(JPanel main) {
 		if (instance == null) {
-			instance = new Courses(main);
+			instance = new Students(main);
 		}
 		return instance;
 	}
