@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import models.course.Module;
+import models.user.Admin;
 import models.user.SystemUser;
 import models.user.Teacher;
 
@@ -47,7 +48,8 @@ public class Teachers extends JPanel {
 		students.setBounds(113, 0, 1222, 701);
 		add(students);
 
-		JLabel title = new JLabel("Manage Teachers");
+		String e = user instanceof Admin ? "Manage" : "View";
+		JLabel title = new JLabel(e + " Teachers");
 		title.setFont(new Font("Futura", Font.PLAIN, 25));
 		title.setBounds(5, 75, 236, 36);
 		students.add(title);
@@ -96,7 +98,6 @@ public class Teachers extends JPanel {
 			}
 		});
 		addBtnLbl.setBounds(854, 47, 45, 45);
-		students.add(addBtnLbl);
 
 		JLabel editBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/edit.png")));
 		editBtnLbl.setBounds(946, 43, 45, 45);
@@ -150,7 +151,6 @@ public class Teachers extends JPanel {
 
 			}
 		});
-		students.add(editBtnLbl);
 
 		JLabel removeBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/remove.png")));
 		removeBtnLbl.addMouseListener(new MouseAdapter() {
@@ -182,24 +182,18 @@ public class Teachers extends JPanel {
 			}
 		});
 		removeBtnLbl.setBounds(1036, 47, 45, 45);
-		students.add(removeBtnLbl);
 
 		JLabel addLbl = new JLabel("Add");
 		addLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		addLbl.setBounds(846, 103, 61, 16);
-		students.add(addLbl);
 
 		JLabel editLbl = new JLabel("Edit");
 		editLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		editLbl.setBounds(931, 104, 61, 16);
-		students.add(editLbl);
 
 		JLabel removeLbl = new JLabel("Remove");
 		removeLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		removeLbl.setBounds(1029, 103, 61, 16);
-		students.add(removeLbl);
-
-		createTable(students);
 
 		JLabel assignBtnLbl = new JLabel(new ImageIcon(Teachers.class.getResource("/resources/assign.png")));
 		assignBtnLbl.addMouseListener(new MouseAdapter() {
@@ -281,12 +275,23 @@ public class Teachers extends JPanel {
 			}
 		});
 		assignBtnLbl.setBounds(771, 53, 45, 45);
-		students.add(assignBtnLbl);
 
 		JLabel assignLbl = new JLabel("Assign");
 		assignLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		assignLbl.setBounds(765, 103, 61, 16);
-		students.add(assignLbl);
+
+		if (user instanceof Admin) {
+			students.add(addBtnLbl);
+			students.add(editBtnLbl);
+			students.add(removeBtnLbl);
+			students.add(addLbl);
+			students.add(editLbl);
+			students.add(removeLbl);
+			students.add(assignLbl);
+			students.add(assignBtnLbl);
+		}
+
+		createTable(students);
 
 	}
 

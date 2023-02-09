@@ -39,7 +39,8 @@ public class Courses extends JPanel {
 		courses.setBounds(113, 0, 1222, 701);
 		add(courses);
 
-		JLabel title = new JLabel("Manage Courses");
+		String e = user instanceof Admin ? "Manage" : "View";
+		JLabel title = new JLabel(e + " Courses");
 		title.setFont(new Font("Futura", Font.PLAIN, 25));
 		title.setBounds(5, 75, 236, 36);
 		courses.add(title);
@@ -81,7 +82,6 @@ public class Courses extends JPanel {
 			}
 		});
 		addBtnLbl.setBounds(854, 47, 45, 45);
-		courses.add(addBtnLbl);
 
 		JLabel editBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/edit.png")));
 		editBtnLbl.addMouseListener(new MouseAdapter() {
@@ -118,7 +118,6 @@ public class Courses extends JPanel {
 			}
 		});
 		editBtnLbl.setBounds(946, 43, 45, 45);
-		courses.add(editBtnLbl);
 
 		JLabel removeBtnLbl = new JLabel(new ImageIcon(getClass().getResource("/resources/remove.png")));
 		removeBtnLbl.addMouseListener(new MouseAdapter() {
@@ -153,7 +152,6 @@ public class Courses extends JPanel {
 			}
 		});
 		removeBtnLbl.setBounds(1036, 47, 45, 45);
-		courses.add(removeBtnLbl);
 
 		JLabel addLbl = new JLabel("Add");
 		addLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -171,6 +169,9 @@ public class Courses extends JPanel {
 			courses.add(addLbl);
 			courses.add(editLbl);
 			courses.add(removeLbl);
+			courses.add(addBtnLbl);
+			courses.add(editBtnLbl);
+			courses.add(removeBtnLbl);
 		}
 
 		createCoursesGrid(courses);

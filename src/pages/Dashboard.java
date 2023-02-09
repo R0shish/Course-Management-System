@@ -220,11 +220,51 @@ class Dashboard extends JPanel {
 
 		if (user instanceof Student) {
 			Student student = (Student) user;
+			JButton viewResultBtn = new JButton("View Your Result");
+			viewResultBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JPanel panel = new JPanel(new GridLayout(1, 2));
+					JLabel idLabel = new JLabel("Enter module id: ");
+					JTextField idField = new JTextField();
+
+					JLabel marksLabel = new JLabel("");
+
+					panel.add(idLabel);
+					panel.add(idField);
+
+					panel.add(marksLabel);
+
+					int result = JOptionPane.showConfirmDialog(null, panel, "View Results",
+							JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						String moduleId = idField.getText();
+
+						try {
+							int marks = DataManager.retrieveMarks(student.getId(), moduleId);
+							String res = "You have scored " + marks + " marks in "
+									+ DataRetriever.getModuleById(Integer.parseInt(moduleId)).getName();
+							JOptionPane.showMessageDialog(null, res, "Your Result", JOptionPane.INFORMATION_MESSAGE);
+
+						} catch (SQLException e1) {
+
+							JOptionPane.showMessageDialog(null, "Results not available for the module",
+									e1.getMessage(),
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			});
+			viewResultBtn.setBounds(637, 39, 136, 45);
+			dashboard.add(viewResultBtn);
+		}
+
+		if (user instanceof Student) {
+			Student student = (Student) user;
 			String enrollmentStatus = student.getEnrolledCourse() == null ? "Not Enrolled"
 					: student.getEnrolledCourse().getName();
 			JLabel EnrollmentStatusLbl = new JLabel("Enrollment Status: " + enrollmentStatus);
 			EnrollmentStatusLbl.setFont(new Font("Futura", Font.PLAIN, 20));
-			EnrollmentStatusLbl.setBounds(58, 150, 1200, 25);
+			EnrollmentStatusLbl.setBounds(58, 150, 1200, 16);
 			dashboard.add(EnrollmentStatusLbl);
 
 			if (student.getEnrolledCourse() == null) {

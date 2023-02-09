@@ -46,6 +46,7 @@ public class Auth {
 							Student student = DataRetriever.getStudents(rs.getInt("id"));
 							if (student == null)
 								return new Student(rs.getInt("id"), rs.getString("name"));
+							return student;
 						case "Teacher":
 							return new Teacher(rs.getString("name"));
 						case "Admin":

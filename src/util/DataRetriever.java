@@ -85,6 +85,16 @@ public class DataRetriever {
         return modules;
     }
 
+    public static Module getModuleById(int moduleId) {
+        ArrayList<Module> allModules = getAllModules();
+        for (Module module : allModules) {
+            if (module.getId() == moduleId) {
+                return module;
+            }
+        }
+        return null;
+    }
+
     public static ArrayList<Teacher> getTeachers() {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>();
         try {
