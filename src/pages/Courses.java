@@ -1,4 +1,4 @@
-package pages.admin;
+package pages;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import models.course.Course;
+import models.user.Admin;
+import models.user.SystemUser;
 import util.DataManager;
 import util.DataRetriever;
 
@@ -27,7 +29,7 @@ public class Courses extends JPanel {
 	private static Courses instance;
 	JPanel coursesGrid;
 
-	private Courses(JPanel main) {
+	private Courses(JPanel main, SystemUser user) {
 		main.add(this);
 		this.setBounds(113, 0, 1341, 701);
 		setLayout(null);
@@ -156,17 +158,20 @@ public class Courses extends JPanel {
 		JLabel addLbl = new JLabel("Add");
 		addLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		addLbl.setBounds(846, 103, 61, 16);
-		courses.add(addLbl);
 
 		JLabel editLbl = new JLabel("Edit");
 		editLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		editLbl.setBounds(931, 104, 61, 16);
-		courses.add(editLbl);
 
 		JLabel removeLbl = new JLabel("Remove");
 		removeLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		removeLbl.setBounds(1029, 103, 61, 16);
-		courses.add(removeLbl);
+
+		if (user instanceof Admin) {
+			courses.add(addLbl);
+			courses.add(editLbl);
+			courses.add(removeLbl);
+		}
 
 		createCoursesGrid(courses);
 
@@ -199,9 +204,9 @@ public class Courses extends JPanel {
 	}
 
 	// Singleton to ensure one and only instance
-	public static Courses getInstance(JPanel main) {
+	public static Courses getInstance(JPanel main, SystemUser user) {
 		if (instance == null) {
-			instance = new Courses(main);
+			instance = new Courses(main, user);
 		}
 		return instance;
 	}

@@ -1,4 +1,4 @@
-package pages.admin;
+package pages;
 
 import java.awt.Font;
 import java.sql.SQLException;
@@ -14,7 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import models.user.Teacher;
+import models.user.Student;
+import models.user.SystemUser;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -31,7 +32,7 @@ public class Students extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Students(JPanel main) {
+	public Students(JPanel main, SystemUser user) {
 		main.add(this);
 		this.setBounds(113, 0, 1341, 701);
 		setLayout(null);
@@ -156,28 +157,28 @@ public class Students extends JPanel {
 		removeLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		removeLbl.setBounds(1029, 103, 61, 16);
 		students.add(removeLbl);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 185, 1138, 454);
 		students.add(scrollPane);
 
-		ArrayList<Teacher> teachersData = DataRetriever.getTeachers();
+		ArrayList<Student> studentData = DataRetriever.getStudents();
 
 		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(new String[] { "ID", "Name", "Phone Number", "Email Address", "Module" });
-		for (Teacher teacherData : teachersData) {
-			model.addRow(new Object[] { teacherData.getId(), teacherData.getName(), teacherData.getPhone(), "",
-					teacherData.getModules() });
+		model.setColumnIdentifiers(new String[] { "ID", "Name", "Phone Number", "Email Address", "Modules Enrolled" });
+		for (Student student : studentData) {
+			model.addRow(new Object[] { student.getId(), student.getName(), student.getPhone(), "", "" });
 		}
 		JTable table_1 = new JTable(model);
+		table_1.setEnabled(false);
 		scrollPane.setViewportView(table_1);
 
 	}
 
 	// Singleton to ensure one and only instance
-	public static Students getInstance(JPanel main) {
+	public static Students getInstance(JPanel main, SystemUser user) {
 		if (instance == null) {
-			instance = new Students(main);
+			instance = new Students(main, user);
 		}
 		return instance;
 	}

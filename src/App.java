@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import auth.Auth;
-import pages.common.SplashScreen;
+import pages.SplashScreen;
 import util.CustomImage;
 import util.DataManager;
 import util.DataRetriever;

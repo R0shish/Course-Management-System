@@ -1,4 +1,4 @@
-package pages.common;
+package pages;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -33,7 +33,7 @@ public class SignUp extends JPanel {
 
 	public SignUp(JFrame frame, CustomImage logo) {
 
-		ImageIcon signupImg = new ImageIcon(getClass().getResource("../../resources/signup_image.png"));
+		ImageIcon signupImg = new ImageIcon(getClass().getResource("/resources/signup_image.png"));
 		Image signupImage = signupImg.getImage().getScaledInstance(1100, 708, java.awt.Image.SCALE_SMOOTH);
 		signupImg = new ImageIcon(signupImage);
 
@@ -45,7 +45,7 @@ public class SignUp extends JPanel {
 		signup.setLayout(null);
 
 		JLabel password_eye = new JLabel(
-				new ImageIcon(getClass().getResource("../../resources/password_eye_show.png")));
+				new ImageIcon(getClass().getResource("/resources/password_eye_show.png")));
 		password_eye.setBounds(336, 490, 41, 22);
 		signup.add(password_eye);
 
@@ -223,10 +223,12 @@ public class SignUp extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (passwordTxt.getEchoChar() == '●') {
 					passwordTxt.setEchoChar((char) 0);
-					password_eye.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_hide.png")));
+					password_eye
+							.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_hide.png")));
 				} else {
 					passwordTxt.setEchoChar('●');
-					password_eye.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_show.png")));
+					password_eye
+							.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
 				}
 			}
 		});

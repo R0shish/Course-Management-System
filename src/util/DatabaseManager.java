@@ -106,10 +106,10 @@ public class DatabaseManager {
 			String enrollmentTableSQL = """
 					CREATE TABLE enrollments (
 					    student_id INT NOT NULL,
-					    module_id INT NOT NULL,
+					    course_id INT NOT NULL,
 					    FOREIGN KEY (student_id) REFERENCES students(student_id),
-					    FOREIGN KEY (module_id) REFERENCES modules(module_id),
-					    PRIMARY KEY (student_id, module_id))
+					    FOREIGN KEY (course_id) REFERENCES courses(course_id),
+					    PRIMARY KEY (student_id, course_id))
 					""";
 			executeUpdate(enrollmentTableSQL);
 			String teacherModulesTableSQL = """

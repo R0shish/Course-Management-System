@@ -1,4 +1,4 @@
-package pages.common;
+package pages;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,10 +20,7 @@ import javax.swing.JTextField;
 import auth.Auth;
 import exceptions.InvalidEmailException;
 import exceptions.InvalidPasswordException;
-import models.user.Admin;
-import models.user.Student;
 import models.user.SystemUser;
-import models.user.Teacher;
 import util.CustomImage;
 import util.Validator;
 
@@ -36,7 +33,7 @@ public class Login extends JPanel {
 
 	public Login(JFrame frame, CustomImage logo) {
 
-		ImageIcon loginImg = new ImageIcon(getClass().getResource("../../resources/login_image.png"));
+		ImageIcon loginImg = new ImageIcon(getClass().getResource("/resources/login_image.png"));
 		Image loginImage = loginImg.getImage().getScaledInstance(1100, 708, java.awt.Image.SCALE_SMOOTH);
 		loginImg = new ImageIcon(loginImage);
 
@@ -48,7 +45,7 @@ public class Login extends JPanel {
 		login.setLayout(null);
 
 		JLabel password_eye = new JLabel(
-				new ImageIcon(Login.class.getResource("../../resources/password_eye_show.png")));
+				new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
 		password_eye.setBounds(339, 414, 30, 19);
 		login.add(password_eye);
 
@@ -152,13 +149,8 @@ public class Login extends JPanel {
 					emailTxt.setText("");
 					passwordTxt.setText("");
 
-					if (user instanceof Student) {
-						new Dashboard(frame, (Student) user, login);
-					} else if (user instanceof Teacher) {
-						new Dashboard(frame, (Teacher) user, login);
-					} else if (user instanceof Admin) {
-						new Dashboard(frame, (Admin) user, login);
-					}
+					new Dashboard(frame, user, login);
+
 					login.setVisible(false);
 
 				} catch (InvalidEmailException errEmail) {
@@ -187,11 +179,11 @@ public class Login extends JPanel {
 				if (passwordTxt.getEchoChar() == '●') {
 					passwordTxt.setEchoChar((char) 0);
 					password_eye
-							.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_hide.png")));
+							.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_hide.png")));
 				} else {
 					passwordTxt.setEchoChar('●');
 					password_eye
-							.setIcon(new ImageIcon(Login.class.getResource("../../resources/password_eye_show.png")));
+							.setIcon(new ImageIcon(Login.class.getResource("/resources/password_eye_show.png")));
 				}
 			}
 		});

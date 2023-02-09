@@ -10,6 +10,7 @@ import models.user.Admin;
 import models.user.Student;
 import models.user.SystemUser;
 import models.user.Teacher;
+import util.DataRetriever;
 
 public class Auth {
 	private static PreparedStatement checkEmailStmt;
@@ -20,7 +21,7 @@ public class Auth {
 	public Auth(util.DatabaseManager db) throws SQLException {
 		checkEmailStmt = db.getConnection().prepareStatement("SELECT count(*) FROM auth WHERE email=?");
 		retrieveRoleStmt = db.getConnection()
-				.prepareStatement("SELECT name,role FROM auth WHERE email=? AND BINARY password=?");
+				.prepareStatement("SELECT id, name,role FROM auth WHERE email=? AND BINARY password=?");
 		checkEmailExistenceStmt = db.getConnection().prepareStatement("SELECT email FROM auth WHERE email=?");
 		addCredentialStmt = db.getConnection()
 				.prepareStatement("INSERT INTO auth (name, email, password, role) VALUES (?,?,?, 'Student')");
@@ -42,7 +43,9 @@ public class Auth {
 				if (rs.next()) {
 					switch (rs.getString("role")) {
 						case "Student":
-							return new Student(rs.getString("name"));
+							Student student = DataRetriever.getStudents(rs.getInt("id"));
+							if (student == null)
+								return new Student(rs.getInt("id"), rs.getString("name"));
 						case "Teacher":
 							return new Teacher(rs.getString("name"));
 						case "Admin":

@@ -1,4 +1,4 @@
-package pages.common;
+package pages;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

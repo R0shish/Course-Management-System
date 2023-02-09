@@ -24,6 +24,14 @@ public class Course {
         return modules;
     }
 
+    public String getModulesString() {
+        String modulesString = "";
+        for (Module module : modules) {
+            modulesString += module.getName() + ", ";
+        }
+        return modulesString.substring(0, modulesString.length() - 2);
+    }
+
     public void setModules(ArrayList<Module> modules) {
         this.modules = modules;
     }
