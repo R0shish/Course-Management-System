@@ -211,4 +211,8 @@ public class Courses extends JPanel {
 		}
 		return instance;
 	}
+
+	public static void dispose() {
+		instance = null;
+	}
 }

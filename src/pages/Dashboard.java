@@ -67,6 +67,9 @@ class Dashboard extends JPanel {
 		JButton btnNewButton = new JButton("Logout");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Courses.dispose();
+				Students.dispose();
+				Teachers.dispose();
 				login.setVisible(true);
 				main.setVisible(false);
 			}

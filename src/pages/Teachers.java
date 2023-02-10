@@ -329,4 +329,8 @@ public class Teachers extends JPanel {
 		}
 		return instance;
 	}
+
+	public static void dispose() {
+		instance = null;
+	}
 }

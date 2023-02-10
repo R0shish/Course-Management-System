@@ -143,7 +143,7 @@ public class Students extends JPanel {
 				panel.add(numberLabel);
 				panel.add(numberField);
 
-				int result = JOptionPane.showConfirmDialog(null, panel, "Update Teacher", JOptionPane.OK_CANCEL_OPTION);
+				int result = JOptionPane.showConfirmDialog(null, panel, "Update Student", JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					String id = idField.getText().trim();
 					String email = emailField.getText().trim();
@@ -293,5 +293,9 @@ public class Students extends JPanel {
 			instance = new Students(main, user);
 		}
 		return instance;
+	}
+
+	public static void dispose() {
+		instance = null;
 	}
 }
